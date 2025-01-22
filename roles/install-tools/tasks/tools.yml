@@ -28,6 +28,8 @@
     - { repo: "BeichenDream/GodPotato",  regex: "GodPotato-NET4.exe", location: "/home/{{ ansible_user_id }}/tools" }
     - { repo: "carlospolop/PEASS-ng",  regex: "linpeas.sh", location: "/home/{{ ansible_user_id }}/tools" }
     - { repo: "carlospolop/PEASS-ng",  regex: "winPEASx64.exe", location: "/home/{{ ansible_user_id }}/tools" }
+    - { repo: "antonioCoco/RunasCs",  regex: "RunasCs.zip", location: "/home/{{ ansible_user_id }}/tools" }
+
   async: 45
   poll: 0
   become: true

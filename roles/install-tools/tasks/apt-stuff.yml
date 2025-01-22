@@ -22,6 +22,12 @@
       - flameshot
       - exiftool
       - golang
+      - feroxbuster
+      - gobuster
+      - seclists
+      - enum4linux-ng
+      - wsgidav
+      - rlwrap
     state: latest
 
 - name: Download Visual Studio Code .deb package
