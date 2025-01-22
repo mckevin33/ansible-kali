@@ -1,0 +1,52 @@
+---
+- name: "Create Python virtual environments in /opt repositories"
+  command: python3 -m venv .venv
+  args:
+    chdir: "{{ item.location }}"
+  loop:
+    - { location: "/opt/impacket" }
+    - { location: "/opt/NetExec" }
+    - { location: "/opt/Certipy" }
+    - { location: "/opt/BloodHound.py" }
+    - { location: "/opt/GPOwned" }
+    - { location: "/opt/chisel" }
+    - { location: "/opt/kerbrute" }
+    - { location: "/opt/ligolo-ng" }
+    - { location: "/opt/pre2k" }
+    - { location: "/opt/pyGPOAbuse" }
+    - { location: "/opt/pywhisker" }
+    - { location: "/opt/targetedKerberoast" }
+  become: true
+  become_method: sudo
+
+- name: "Build repositories using pip install ."
+  command: "{{ item.location }}/.venv/bin/pip install ."
+  args:
+    chdir: "{{ item.location }}"
+  loop:
+    - { location: "/opt/pre2k" }
+    - { location: "/opt/BloodHound.py" }
+    - { location: "/opt/Certipy" }
+  become: true
+  become_method: sudo
+
+- name: "Build repositories using pip install -r requirements.txt"
+  command: "{{ item.location }}/.venv/bin/pip install -r requirements.txt"
+  args:
+    chdir: "{{ item.location }}"
+  loop:
+    - { location: "/opt/pywhisker" }
+    - { location: "/opt/targetedKerberoast" }
+    - { location: "/opt/pyGPOAbuse" }
+    - { location: "/opt/GPOwned" }
+    - { location: "/opt/impacket" }
+  become: true
+  become_method: sudo
+
+- name: Update BloodHound port in .env.example
+  lineinfile:
+    path: /opt/BloodHound/examples/docker-compose/.env.example
+    regexp: '^BLOODHOUND_PORT='
+    line: 'BLOODHOUND_PORT=8888'
+    backrefs: yes
+  become: true

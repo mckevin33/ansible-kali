@@ -1,0 +1,25 @@
+---
+- name: "Installing useful GitHub repos"
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.location }}"
+    force: "{{ item.force | default('no') }}"
+    version: "{{ item.branch | default('HEAD') }}"
+  loop:
+    - { repo: "https://github.com/Flangvik/SharpCollection", location: "/opt/SharpCollection" }
+    - { repo: "https://github.com/danielmiessler/SecLists", location: "/usr/share/SecLists", force: yes }
+    - { repo: "https://github.com/fortra/impacket", location: "/opt/impacket" }
+    - { repo: "https://github.com/Pennyw0rth/NetExec", location: "/opt/NetExec" }
+    - { repo: "https://github.com/ly4k/Certipy", location: "/opt/Certipy" }
+    - { repo: "https://github.com/dirkjanm/BloodHound.py", location: "/opt/BloodHound.py", branch: "bloodhound-ce" }
+    - { repo: "https://github.com/SpecterOps/BloodHound", location: "/opt/BloodHound", force: yes }
+    - { repo: "https://github.com/X-C3LL/GPOwned", location: "/opt/GPOwned" }
+    - { repo: "https://github.com/jpillora/chisel", location: "/opt/chisel" }
+    - { repo: "https://github.com/ropnop/kerbrute", location: "/opt/kerbrute" }
+    - { repo: "https://github.com/nicocha30/ligolo-ng", location: "/opt/ligolo-ng" }
+    - { repo: "https://github.com/garrettfoster13/pre2k", location: "/opt/pre2k" }
+    - { repo: "https://github.com/Hackndo/pyGPOAbuse", location: "/opt/pyGPOAbuse" }
+    - { repo: "https://github.com/ShutdownRepo/pywhisker", location: "/opt/pywhisker" }
+    - { repo: "https://github.com/ShutdownRepo/targetedKerberoast", location: "/opt/targetedKerberoast" }
+  become: true
+  become_method: sudo

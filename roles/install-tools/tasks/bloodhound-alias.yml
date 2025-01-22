@@ -1,0 +1,11 @@
+---
+- name: "Ensure aliases for BloodHound Docker commands are present in .zshrc"
+  lineinfile:
+    path: "/home/{{ ansible_user_id }}/.zshrc"
+    line: "{{ item }}"
+    state: present
+    create: yes
+  loop:
+    - 'alias bloodhound-docker-up="docker compose -f /opt/BloodHound/examples/docker-compose/docker-compose.yml up"'
+    - 'alias bloodhound-docker-down="docker compose -f /opt/BloodHound/examples/docker-compose/docker-compose.yml down"'
+  become: true

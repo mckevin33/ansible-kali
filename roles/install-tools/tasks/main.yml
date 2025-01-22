@@ -1,0 +1,10 @@
+---
+- import_tasks: apt-stuff.yml
+- import_tasks: bloodhound-alias.yml
+- import_tasks: create-openvpn-launchers.yml
+- import_tasks: docker.yml
+- import_tasks: github-repos.yml
+- import_tasks: install-github-repos.yml
+- import_tasks: tools.yml
+
+

@@ -1,0 +1,42 @@
+---
+- name: Update APT repo/cache
+  became: true
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+    cache_valid_time: 3600
+
+- name: Upgrade all packages
+  became: true
+  apt:
+    upgrade: yes
+    force_apt_get: yes
+
+- name: Install packages
+  became: true
+  package:
+    name:
+      - jq
+      - xq
+      - ntpdate
+      - flameshot
+      - exiftool
+      - golang
+    state: latest
+
+- name: Download Visual Studio Code .deb package
+  get_url:
+    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    dest: "/tmp/code.deb"
+    mode: '0644'
+
+- name: Install Visual Studio Code from .deb package
+  became: true
+  command: apt install -y /tmp/code.deb
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Remove downloaded .deb package
+  file:
+    path: "/tmp/code.deb"
+    state: absent

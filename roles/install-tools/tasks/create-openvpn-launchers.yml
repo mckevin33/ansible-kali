@@ -1,0 +1,33 @@
+---
+- name: "Copy OpenVPN configuration files to ~/Documents/"
+  copy:
+    src: "{{ item.src }}"
+    dest: "/home/{{ ansible_user_id }}/Documents/{{ item.dest }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0644'
+  loop:
+    - { src: "academy-regular.ovpn", dest: "academy-regular.ovpn" }
+    - { src: "competitive_MCKevin.ovpn", dest: "competitive_MCKevin.ovpn" }
+    - { src: "lab_MCKevin.ovpn", dest: "lab_MCKevin.ovpn" }
+    - { src: "universal.ovpn", dest: "universal.ovpn" }
+
+- name: "Create OpenVPN launchers on desktop"
+  copy:
+    dest: "/home/{{ ansible_user_id }}/Desktop/{{ item.name }}.desktop"
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Terminal=true
+      Exec=sudo bash -c "openvpn /home/{{ ansible_user_id }}/Documents/{{ item.ovpn_file }}; exec bash"
+      Name={{ item.display_name }}
+      Icon=network-vpn
+      Categories=Network;
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0755'
+  loop:
+    - { name: "academy-regular", ovpn_file: "academy-regular.ovpn", display_name: "Academy HTB" }
+    - { name: "competitive_MCKevin", ovpn_file: "competitive_MCKevin.ovpn", display_name: "Competitive VPN HTB" }
+    - { name: "lab_MCKevin", ovpn_file: "lab_MCKevin.ovpn", display_name: "HTB Lab VPN" }
+    - { name: "universal", ovpn_file: "universal.ovpn", display_name: "OSCP" }
