@@ -26,8 +26,9 @@
       - gobuster
       - seclists
       - enum4linux-ng
-      - wsgidav
       - rlwrap
+      - remmina
+      - joplin
     state: latest
 
 - name: Download Visual Studio Code .deb package
